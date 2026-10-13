@@ -1,0 +1,90 @@
+name: Validate and deploy SmartCart
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Check HTML structure
+        run: python tests/validate_html.py
+      - name: Check direct page and asset routes
+        run: python tests/check_routes.py
+      - name: Check JavaScript syntax
+        run: node --check js/app.js && node --check js/products.js
+      - name: Validate project structure and HTML hooks
+        run: node tests/validate.mjs
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: validate
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Deploy artifact
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  notify-success:
+    name: Notify successful deployment
+    if: always() && needs.deploy.result == 'success'
+    needs: [validate, deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Slack notification when configured
+        if: env.SLACK_WEBHOOK_URL != ''
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          curl --fail --silent --show-error --max-time 15 \
+            -H 'Content-Type: application/json' \
+            --data '{"text":"SmartCart deployment succeeded. Repository: ${{ github.repository }}. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"}' \
+            "$SLACK_WEBHOOK_URL" >/dev/null
+
+  notify-failure:
+    name: Notify failed workflow
+    if: always() && (needs.validate.result == 'failure' || needs.deploy.result == 'failure')
+    needs: [validate, deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Slack notification when configured
+        if: env.SLACK_WEBHOOK_URL != ''
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          curl --fail --silent --show-error --max-time 15 \
+            -H 'Content-Type: application/json' \
+            --data '{"text":"SmartCart workflow failed. Repository: ${{ github.repository }}. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"}' \
+            "$SLACK_WEBHOOK_URL" >/dev/null
