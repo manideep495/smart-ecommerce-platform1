@@ -1,19 +1,107 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f8f7f4">
-  <meta name="description" content="Shop considered everyday essentials, compare options and keep spending within your budget.">
-  <title>SmartCart | Shop with clarity</title><link rel="stylesheet" href="css/style.css">
-  <script defer src="js/products.js"></script><script defer src="js/app.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartCart | Smart Shopping</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="home">
-  <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html" aria-label="SmartCart home"><span class="brand-symbol" aria-hidden="true">S</span><span>SmartCart</span></a><button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="primaryNav">Menu</button><nav class="primary-nav" id="primaryNav" aria-label="Main navigation"><a href="products.html">Products</a><a href="budget.html">Budget Buddy</a><a href="compare.html">Compare</a><a href="recommendations.html">For you</a><a href="about.html">About</a></nav><form class="header-search" id="headerSearch"><label class="sr-only" for="globalSearch">Search products</label><input id="globalSearch" name="q" type="search" placeholder="Search products"><button aria-label="Submit search"><span class="search-glyph" aria-hidden="true"></span></button></form><div class="header-tools"><a href="wishlist.html" aria-label="Wishlist">Saved <span class="header-count" id="wishlistCount">0</span></a><a class="header-cart" href="cart.html">Cart <span class="header-count" id="cartCount">0</span></a></div></div></header>
-  <main id="main">
-    <section class="home-hero"><div class="hero-content"><p class="kicker">A MORE CONSIDERED WAY TO SHOP</p><h1>Everyday essentials.<br><span>Chosen with care.</span></h1><p class="hero-description">Find useful things for home, work and getting out the door. Compare the details and make each rupee count.</p><a class="button button-dark" href="products.html">Browse the collection <span aria-hidden="true">&#8599;</span></a><div class="hero-caption"><span class="caption-rule"></span>Useful picks, practical details, no pressure.</div></div><div class="hero-photo"><img class="product-image" src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1200&q=85" alt="A thoughtfully arranged selection of everyday items" fetchpriority="high"><div class="photo-note"><span class="note-label">SMARTCART EDIT</span><span>Considered everyday goods</span></div></div></section>
-    <section class="home-intro"><p class="kicker">SHOP WITH CLARITY</p><h2>Good decisions start with<br>the details that matter.</h2><div class="intro-links"><a href="budget.html"><span class="link-number">01</span><span><strong>Set a spending limit</strong><small>See products within your budget.</small></span><span class="link-arrow" aria-hidden="true">&#8594;</span></a><a href="compare.html"><span class="link-number">02</span><span><strong>Compare your options</strong><small>Look at features and prices together.</small></span><span class="link-arrow" aria-hidden="true">&#8594;</span></a><a href="recommendations.html"><span class="link-number">03</span><span><strong>Find a useful suggestion</strong><small>Understand why a product fits.</small></span><span class="link-arrow" aria-hidden="true">&#8594;</span></a></div></section>
-    <section class="home-products"><div class="section-head"><div><p class="kicker">A FEW PLACES TO START</p><h2>Everyday, made easier.</h2></div><a class="underlined-link" href="products.html">View all products <span aria-hidden="true">&#8594;</span></a></div><div class="product-grid compact-grid" id="homeProducts" aria-live="polite"></div></section>
-    <section class="home-note"><div><p class="kicker">YOUR SHOPPING, YOUR CALL</p><h2>Thoughtful tools.<br>Transparent choices.</h2></div><p>Our suggestions use clear rules based on the sample product list, your budget and your cart. Your selections stay in this browser. Checkout is only a demonstration; no payment is made.</p><a class="button button-outline" href="about.html">How SmartCart works <span aria-hidden="true">&#8594;</span></a></section>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-icon">🛒</span> SmartCart</a>
+    <nav>
+      <a href="#products">Products</a>
+      <a href="#budget">Budget Buddy</a>
+      <a href="#compare">Compare</a>
+      <a href="#agile">Agile Process</a>
+    </nav>
+    <button class="cart-pill" id="cartJump">Cart <span id="cartCount">0</span></button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">SMART SHOPPING • SIMPLE CHOICES</span>
+        <h1>Shop smarter.<br><span>Stay on budget.</span></h1>
+        <p>Explore products, compare options, and plan your spending—all in one simple shopping demo.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#products">Explore products</a>
+          <a class="btn secondary" href="#budget">Plan my budget</a>
+        </div>
+        <div class="hero-note">Demo project · No real payments</div>
+      </div>
+      <div class="hero-art" aria-label="Shopping illustration">
+        <div class="orb orb-one"></div><div class="orb orb-two"></div>
+        <div class="shopping-bag">🛍️</div>
+        <div class="float-card card-a">✨ Smart picks</div>
+        <div class="float-card card-b">₹ Budget friendly</div>
+      </div>
+    </section>
+
+    <section class="section" id="products">
+      <div class="section-head">
+        <div><span class="eyebrow">THE COLLECTION</span><h2>Find your next favorite</h2><p>Search the sample products and add items to your cart.</p></div>
+        <div class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="Search products..." aria-label="Search products"></div>
+      </div>
+      <div class="category-row" id="categories">
+        <button class="category active" data-category="All">All products</button>
+        <button class="category" data-category="Electronics">Electronics</button>
+        <button class="category" data-category="Home">Home</button>
+        <button class="category" data-category="Accessories">Accessories</button>
+      </div>
+      <div class="product-grid" id="productGrid"></div>
+      <p class="empty-state hidden" id="emptyState">No products found. Try another search.</p>
+    </section>
+
+    <section class="section feature-grid">
+      <article class="panel budget-panel" id="budget">
+        <span class="eyebrow">BUDGET BUDDY</span>
+        <h2>Make your budget work for you</h2>
+        <p>Set a spending limit and see how your cart compares with it.</p>
+        <label for="budgetInput">Your budget (₹)</label>
+        <div class="budget-input-row"><span>₹</span><input id="budgetInput" type="number" min="0" value="5000"><button class="btn primary" id="setBudget">Set budget</button></div>
+        <div class="budget-summary"><div><span>Cart total</span><strong id="budgetTotal">₹0</strong></div><div><span>Budget left</span><strong id="budgetLeft">₹5,000</strong></div></div>
+        <div class="progress-track"><div id="budgetProgress"></div></div>
+        <p class="status-line" id="budgetStatus">Your cart is within budget.</p>
+      </article>
+
+      <article class="panel compare-panel" id="compare">
+        <span class="eyebrow">QUICK COMPARISON</span>
+        <h2>Compare products</h2>
+        <p>Select two products to compare their prices and categories.</p>
+        <div class="compare-selects">
+          <label>Product A<select id="compareA"></select></label>
+          <label>Product B<select id="compareB"></select></label>
+        </div>
+        <div id="compareResult" class="compare-result"></div>
+      </article>
+    </section>
+
+    <section class="section recommendation-section" id="recommendations">
+      <div class="section-head"><div><span class="eyebrow">FOR YOU</span><h2>Shopping suggestions</h2><p>Rule-based suggestions from the sample catalog and your budget.</p></div></div>
+      <div id="recommendationGrid" class="recommendation-grid"></div>
+      <p class="notice">Transparency note: this demo uses simple rules and sample data, not a trained AI model.</p>
+    </section>
+
+    <section class="section agile-section" id="agile">
+      <div class="section-head"><div><span class="eyebrow">ASAPM PROJECT</span><h2>How we build with Agile</h2><p>A sample sprint plan for the SmartCart project.</p></div></div>
+      <div class="sprint-grid">
+        <article class="sprint"><span>Sprint 01</span><h3>Plan & design</h3><p>Gather requirements, design the home page, and list tasks.</p><small>Output: page layout</small></article>
+        <article class="sprint"><span>Sprint 02</span><h3>Build shopping</h3><p>Create product cards, search, categories, and cart controls.</p><small>Output: shopping flow</small></article>
+        <article class="sprint"><span>Sprint 03</span><h3>Smart features</h3><p>Add budget tracking, product comparison, and rule-based suggestions.</p><small>Output: helper tools</small></article>
+        <article class="sprint"><span>Sprint 04</span><h3>Test & release</h3><p>Test interactions, fix bugs, collect feedback, and publish the site.</p><small>Output: demo release</small></article>
+      </div>
+      <div class="agile-flow"><span>Plan</span><b>→</b><span>Develop</span><b>→</b><span>Test</span><b>→</b><span>Review</span><b>→</b><span>Improve</span></div>
+    </section>
+
+    <section class="section cart-section" id="cart">
+      <div class="section-head"><div><span class="eyebrow">YOUR SELECTION</span><h2>Shopping cart</h2><p>Review items you selected during this demo.</p></div></div>
+      <div class="cart-box"><div id="cartItems"><p class="cart-empty">Your cart is empty. Add a product to get started.</p></div><div class="cart-total"><span>Total</span><strong id="cartTotal">₹0</strong></div><button id="checkoutBtn" class="btn primary" disabled>Demo checkout</button><p class="notice">Checkout is for demonstration only. No order or payment will be processed.</p></div>
+    </section>
   </main>
-  <footer class="site-footer"><div class="footer-main"><a class="brand" href="index.html"><span class="brand-symbol" aria-hidden="true">S</span><span>SmartCart</span></a><p>A student project for more thoughtful shopping.</p><nav aria-label="Footer navigation"><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav></div><div class="footer-bottom"><span>Sample products and illustrative ratings.</span><span>Demo checkout only; no real payment is processed.</span></div></footer>
-</body></html>
+
+  <footer><a class="brand" href="#">🛒 SmartCart</a><span>ASAPM college project demo · Built with HTML, CSS & JavaScript</span><a href="#top" id="backTop">Back to top ↑</a></footer>
+  <div id="toast" role="status" class="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>
