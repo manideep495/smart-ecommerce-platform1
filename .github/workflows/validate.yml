@@ -1,0 +1,30 @@
+
+name: SmartCart CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get website code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check required website files
+        run: |
+          test -f index.html
+          test -f style.css
+          test -f script.js
+
+      - name: Check JavaScript syntax
+        run: node --check script.js
