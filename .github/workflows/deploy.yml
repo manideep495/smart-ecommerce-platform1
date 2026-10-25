@@ -55,3 +55,17 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
+  notify:
+    runs-on: ubuntu-latest
+    needs: [build, deploy]
+    if: always()
+    steps:
+      - name: Send Slack notification
+        uses: slackapi/slack-github-action@v2.1.1
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            {
+              "text": "SmartCart CI/CD result — Build: ${{ needs.build.result }}, Deploy: ${{ needs.deploy.result }}. Details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }
